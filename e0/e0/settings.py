@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '3.15.244.213',
-    'iic2173-e0-diegoandai.tk'
+    'iic2173-e0-diegoandai.tk',
+    'www.iic2173-e0-diegoandai.tk'
 ]
 
 
