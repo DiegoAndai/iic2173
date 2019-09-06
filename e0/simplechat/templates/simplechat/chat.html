@@ -1,37 +1,46 @@
-<div>
-    Hola {{ nickname }}!
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'simplechat/style.css' %}">
+<div class="columns">
+    <div class="rows" id="avatar_container">
+            <img id="avatar" src="https://avatars.dicebear.com/v2/bottts/{{ nickname }}.svg"/>
+            <div>
+                Hi {{ nickname }}!
+            </div>
+            <form action="{% url 'logout'%}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Logout">
+            </form>
+    </div>
+    <div class="rows" id="content_container">
+        {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>
+                <img src="https://avatars.dicebear.com/v2/bottts/{{ message.author }}.svg" width="50px"/>
+                {{ message.author }} [{{ message.created_at }}]: {{ message.text }}
+            </li>
+        {% endfor %}
+        </ul>
+        {% else %}
+            <p>No messages found.</p>
+        {% endif %}
+        <form action="{% url 'post'%}" method="post">
+            {% csrf_token %}
+            <input type="text" name="text" id="new_message_input">
+            <input type="submit" value="Send">
+        </form>
+        <form action="{% url 'post_quote'%}" method="post">
+                {% csrf_token %}
+                <button type="submit">Feeling <i>quoty</i></button>
+        </form>
+        <div id="pagination">
+                {% if messages.has_previous %}
+                    <a href="?page={{ messages.previous_page_number }}">Previous</a>
+                {% endif %}
+                Page {{messages.number}}/{{messages.paginator.num_pages}}
+                {% if messages.has_next %}
+                    <a href="?page={{ messages.next_page_number }}">Next</a>
+                {% endif %}
+        </div>
+    </div>
 </div>
-<form action="{% url 'logout'%}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="Logout">
-</form>
-{% if messages %}
-    <ul>
-    {% for message in messages %}
-        <li>
-            <img src="https://avatars.dicebear.com/v2/bottts/{{ message.author }}.svg" width="50px"/>
-            {{ message.author }} [{{ message.created_at }}]: {{ message.text }}
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No messages found.</p>
-{% endif %}
-<div>
-    {% if messages.has_previous %}
-        <a href="?page={{ messages.previous_page_number }}">Previous</a>
-    {% endif %}
-    Page {{messages.number}}/{{messages.paginator.num_pages}}
-    {% if messages.has_next %}
-        <a href="?page={{ messages.next_page_number }}">Next</a>
-    {% endif %}
-</div>
-<form action="{% url 'post'%}" method="post">
-    {% csrf_token %}
-    <input type="text" name="text" id="new_message_input">
-    <input type="submit" value="Send">
-</form>
-<form action="{% url 'post_quote'%}" method="post">
-        {% csrf_token %}
-        <button type="submit">Feeling <i>quoty</i></button>
-</form>

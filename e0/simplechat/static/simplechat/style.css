@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  font-family: monospace;
+}
+
+form {
+  display: flex;
+  place-content: center;
+}
+
+a {
+  color:#1fffb8;
+}
+
+a:visited{
+  color:#1fffb8;
+}
+
+.columns {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+#avatar_container {
+  width: 40%;
+  display: grid;
+  place-content: center;
+}
+
+#content_container {
+  width: 60%;
+  background: #111716;
+  color: white;
+  display: grid;
+  place-content: center;
+  grid-row-gap: 10px;
+}
+
+#pagination {
+  display: grid;
+  place-content: center;
+  grid-column-gap: 10px;
+  grid-auto-flow: column;
+}
+
+#avatar {
+  place-self: center;
+  width: 100px;
+}
+
