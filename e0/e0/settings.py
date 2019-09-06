@@ -26,7 +26,7 @@ SECRET_KEY = 'fktykiq#&p*fahs35l92^ehmx)77@xwsx#s44zuhkb^9fh#8(7'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '3.15.244.213',
+    '127.0.0.1',
     'iic2173-e0-diegoandai.tk',
     'www.iic2173-e0-diegoandai.tk'
 ]

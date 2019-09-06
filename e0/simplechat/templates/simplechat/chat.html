@@ -1,0 +1,21 @@
+<div>
+    Hola {{ nickname }}!
+</div>
+<form action="{% url 'logout'%}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Logout">
+</form>
+{% if message_list %}
+    <ul>
+    {% for message in message_list %}
+        <li>{{ message.author }} [{{ message.created_at }}]: {{ message.text }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No messages found.</p>
+{% endif %}
+<form action="{% url 'post'%}" method="post">
+    {% csrf_token %}
+    <input type="text" name="text" id="new_message_input">
+    <input type="submit" value="Send">
+</form>

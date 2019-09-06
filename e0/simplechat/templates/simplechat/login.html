@@ -1,0 +1,6 @@
+<form action="{% url 'set_nickname'%}" method="post">
+    {% csrf_token %}
+    Enter a nickname to participate:
+    <input type="text" name="nickname" id="nick_input">
+    <input type="submit" value="Enter">
+</form>
