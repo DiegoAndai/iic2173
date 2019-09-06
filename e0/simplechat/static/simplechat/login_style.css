@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  font-family: monospace;
+  background: #111716;
+  color: white;
+}
+
+form {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 10px;
+  place-content: center;
+  height: 100%;
+}

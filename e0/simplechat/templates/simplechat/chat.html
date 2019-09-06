@@ -2,8 +2,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'simplechat/style.css' %}">
 <div class="columns">
     <div class="rows" id="avatar_container">
-            <img id="avatar" src="https://avatars.dicebear.com/v2/bottts/{{ nickname }}.svg"/>
-            <div>
+            <img id="main_avatar" src="https://avatars.dicebear.com/v2/bottts/{{ nickname }}.svg"/>
+            <div id="greeting">
                 Hi {{ nickname }}!
             </div>
             <form action="{% url 'logout'%}" method="post">
@@ -13,14 +13,24 @@
     </div>
     <div class="rows" id="content_container">
         {% if messages %}
-        <ul>
+        <div id="messages_container">
         {% for message in messages %}
-            <li>
-                <img src="https://avatars.dicebear.com/v2/bottts/{{ message.author }}.svg" width="50px"/>
-                {{ message.author }} [{{ message.created_at }}]: {{ message.text }}
-            </li>
+            <div class="message_container">
+                <div class="author_container">
+                    <img class="message_avatar" src="https://avatars.dicebear.com/v2/bottts/{{ message.author }}.svg"/>
+                    {{ message.author }}
+                </div>
+                <div class="message_content_container">
+                    <span class="text_container">
+                        {{ message.text }}
+                    </span>
+                    <span class="timestamp_container">
+                        {{ message.created_at }}
+                    </span>
+                </div>
+            </div>
         {% endfor %}
-        </ul>
+        </div>
         {% else %}
             <p>No messages found.</p>
         {% endif %}
