@@ -1,5 +1,5 @@
 import json
-
+import requests
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -32,6 +32,20 @@ def chat(request):
 def post_message(request):
     try:
       text = request.POST["text"]
+      author = request.session["nickname"]
+      new_message = Message(text = text, author = author, created_at = timezone.now())
+      new_message.save()
+      return HttpResponseRedirect(reverse('chat'))
+    except KeyError:
+      return HttpResponseRedirect(reverse('login'))
+  
+def post_quote(request):
+    try:
+      api_response = requests.get('https://api.quotable.io/random')
+      api_json = api_response.json()
+      quote = api_json["content"]
+      quote_author = api_json["author"]
+      text = f"'{quote}' - {quote_author}"
       author = request.session["nickname"]
       new_message = Message(text = text, author = author, created_at = timezone.now())
       new_message.save()

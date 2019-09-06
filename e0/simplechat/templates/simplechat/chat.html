@@ -31,3 +31,7 @@
     <input type="text" name="text" id="new_message_input">
     <input type="submit" value="Send">
 </form>
+<form action="{% url 'post_quote'%}" method="post">
+        {% csrf_token %}
+        <button type="submit">Feeling <i>quoty</i></button>
+</form>
