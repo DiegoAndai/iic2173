@@ -1,0 +1,64 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'simplechat/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="columns">
+    <div class="rows" id="avatar_container">
+            <img id="main_avatar" src="https://avatars.dicebear.com/v2/bottts/{{ nickname }}.svg"/>
+            <div id="greeting">
+                Hi {{ nickname }}!
+            </div>
+            <form action="{% url 'logout'%}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Logout">
+            </form>
+    </div>
+    <div class="rows" id="content_container">
+        {% if messages %}
+        <div id="messages_container">
+        {% for message in messages %}
+            <div class="message_container">
+                <div class="author_container">
+                    <img class="message_avatar" src="https://avatars.dicebear.com/v2/bottts/{{ message.author }}.svg"/>
+                    {{ message.author }}
+                </div>
+                <div class="message_content_container">
+                    <span class="text_container">
+                        {{ message.text }}
+                    </span>
+                    <span class="timestamp_container">
+                        {{ message.created_at }}
+                    </span>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        {% else %}
+            <p>No messages found.</p>
+        {% endif %}
+        <form action="{% url 'post'%}" method="post">
+            {% csrf_token %}
+            <input type="text" name="text" id="new_message_input">
+            <input type="submit" value="Send">
+        </form>
+        <form action="{% url 'post_quote'%}" method="post">
+                {% csrf_token %}
+                <button type="submit">Feeling <i>quoty</i></button>
+        </form>
+        <div id="pagination">
+                {% if messages.has_previous %}
+                    <a href="?page={{ messages.previous_page_number }}">Previous</a>
+                {% endif %}
+                Page {{messages.number}}/{{messages.paginator.num_pages}}
+                {% if messages.has_next %}
+                    <a href="?page={{ messages.next_page_number }}">Next</a>
+                {% endif %}
+        </div>
+    </div>
+    <div id="layout_hint_container">
+        <span id="layout_hint">
+            <i class="fa fa-long-arrow-up"></i>
+            newer - older
+            <i class="fa fa-long-arrow-down"></i>
+        </span>
+    </div>
+</div>
