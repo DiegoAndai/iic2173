@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
+from django.core.paginator import Paginator
 
 from .models import Message
 
@@ -13,8 +14,17 @@ def login(request):
 def chat(request):
     try:
       author = request.session["nickname"]
-      message_list = Message.objects.all()
-      context = {'message_list': message_list, "nickname": author}
+      message_list = Message.objects.all().order_by('-created_at')
+      pages = Paginator(message_list, 5)
+      page_number = request.GET.get("page")
+      if page_number:
+        try:
+          messages = pages.page(page_number)
+        except InvalidPage:
+          messages = pages.page(1)
+      else:
+        messages = pages.page(1)
+      context = {'messages': messages, "nickname": author}
       return render(request, 'simplechat/chat.html', context)
     except KeyError:
       return HttpResponseRedirect(reverse('login'))
